@@ -54,16 +54,16 @@ class Maze:
     
     def successors(self, ml: MazeLocation) -> List[MazeLocation]:
         locations: List[MazeLocation] = []
-        if ml.row + 1 < self._rows and self._grid[ml.row + 1][ml.column] !=
+        if ml.row + 1 < self._rows and self._grid[ml.row + 1][ml.column] != \
             Cell.BLOCKED:
                 locations.append(MazeLocation(ml.row + 1, ml.column))
-        if ml.row - 1 >= 0 and self._grid[ml.row - 1][ml.column] !=
+        if ml.row - 1 >= 0 and self._grid[ml.row - 1][ml.column] != \
             Cell.BLOCKED:
                 locations.append(MazeLocation(ml.row - 1, ml.column))
-        if ml.column + 1 < self._columns and self._grid[ml.row][ml.column + 1]
-            != Cell.BLOCKED:
+        if ml.column + 1 < self._columns and \
+                           self._grid[ml.row][ml.column + 1] != Cell.BLOCKED:
                 locations.append(MazeLocation(ml.row, ml.column + 1))
-        if ml.column - 1 >= 0 and self._grid[ml.row][ml.column - 1] !=:
+        if ml.column - 1 >= 0 and self._grid[ml.row][ml.column - 1] != \
             Cell.BLOCKED:
                 locations.append(MazeLocation(ml.row, ml.column - 1))
         return locations
