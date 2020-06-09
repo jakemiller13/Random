@@ -31,6 +31,23 @@ class Comparable(Protocol):
     def __ge__(self: C, other: C) -> bool:
         return not self < other
 
+class Stack(Generic[T]):
+    def __init__(self) -> None:
+        self._container: List[T] = []
+    
+    @property
+    def empty(self) -> bool:
+        return not self._container
+    
+    def push(self, item: T) -> None:
+        self._container.append(item)
+    
+    def pop(self) -> T:
+        return self._container.pop()
+    
+    def __repr__(self) -> str:
+        return repr(self._container)
+
 # Linear search
 def linear_contains(iterable: Iterable[T], key: T) -> bool:
     for item in iterable:
@@ -51,6 +68,7 @@ def binary_contains(sequence: Sequence[C], key: C) -> bool:
         else:
             return True
     return False
+
 
 print(linear_contains([1, 5, 15, 15, 15, 15, 20], 5))
 print(binary_contains(['a', 'd', 'e', 'f', 'z'], 'f'))
