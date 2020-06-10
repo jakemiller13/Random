@@ -59,6 +59,23 @@ class Node(Generic[T]):
     def __lt__(self, other: Node) -> bool:
         return (self.cost + self.heuristic) < (other.cost + other.heuristic)
 
+class PriorityQueue(Generic[T]):
+    def __init__(self) -> None:
+        self._container: List[T] = []
+    
+    @property
+    def empty(self) -> bool:
+        return not self._container
+    
+    def push(self, item: T) -> None:
+        heappush(self._container, item)
+    
+    def pop(self) -> T:
+        return heappop(self._container)
+    
+    def __repr__(self) -> str:
+        return repr(self._container)
+
 # Linear search
 def linear_contains(iterable: Iterable[T], key: T) -> bool:
     for item in iterable:
