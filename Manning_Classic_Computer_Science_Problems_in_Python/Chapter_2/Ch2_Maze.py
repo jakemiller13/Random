@@ -9,7 +9,7 @@ from enum import Enum
 from typing import List, NamedTuple, Callable, Optional
 import random
 from math import sqrt
-# from Ch2_generic_search import dfs, bfs, node_to_path, astar, Node
+from Ch2_generic_search import dfs, bfs, node_to_path, astar, Node
 
 class Cell(str, Enum):
     EMPTY = ' '
@@ -67,6 +67,18 @@ class Maze:
             Cell.BLOCKED:
                 locations.append(MazeLocation(ml.row, ml.column - 1))
         return locations
+    
+    def mark(self, path: List[MazeLocation]):
+        for maze_location in path:
+            self._grid[maze_location.row][maze_location.column] = Cell.PATH
+        self._grid[self.start.row][self.start.column] = Cell.START
+        self._grid[self.goal.row][self.goal.column] = Cell.GOAL
+    
+    def clear(self, path: List[MazeLocation]):
+        for maze_location in path:
+            self._grid[maze_location.row][maze_location.column] = Cell.EMPTY
+        self._grid[self.start.row][self.start.column] = Cell.START
+        self._grid[self.goal.row][self.goal.column] = Cell.GOAL
 
 def euclidean_distance(goal: MazeLocation) -> Callable[[MazeLocation], float]:
     def distance(ml: MazeLocation) -> float:
@@ -84,3 +96,27 @@ def manhattan_distance(goal: MazeLocation) -> Callable[[MazeLocation], float]:
 
 maze: Maze = Maze()
 print(maze)
+
+# DFS
+print('-' * 50)
+solution1: Optional[Node[MazeLocation]] = dfs(maze.start, maze.goal_test,
+                                              maze.successors)
+if solution1 is None:
+    print('No solution found using depth-first search!')
+else:
+    path1: List[MazeLocation] = node_to_path(solution1)
+    maze.mark(path1)
+    print(maze)
+    maze.clear(path1)
+
+# BFS
+print('-' * 50)
+solution2: Optional[Node[MazeLocation]] = bfs(maze.start, maze.goal_test,
+                                              maze.successors)
+if solution2 is None:
+    print('No solution found using breadth-first search!')
+else:
+    path2: List[MazeLocation] = node_to_path(solution2)
+    maze.mark(path2)
+    print(maze)
+    maze.clear(path2)
