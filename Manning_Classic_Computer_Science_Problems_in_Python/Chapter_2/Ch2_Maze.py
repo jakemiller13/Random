@@ -120,3 +120,16 @@ else:
     maze.mark(path2)
     print(maze)
     maze.clear(path2)
+    
+# A*
+print('-' * 50)
+distance: Callable[[MazeLocation], float] = manhattan_distance(maze.goal)
+solution3: Optional[Node[MazeLocation]] = astar(maze.start, maze.goal_test,
+                                                maze.successors, distance)
+if solution3 is None:
+    print('No solution found using A*!')
+else:
+    path3: List[MazeLocation] = node_to_path(solution3)
+    maze.mark(path3)
+    print(maze)
+    maze.clear(path3)
